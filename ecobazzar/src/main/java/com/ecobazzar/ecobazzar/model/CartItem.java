@@ -1,10 +1,6 @@
 package com.ecobazzar.ecobazzar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -14,58 +10,68 @@ import lombok.ToString;
 @ToString
 public class CartItem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	private Long userId;
-	
-	private Long productId;
-	
-	private int quantity;
-	
-	public CartItem() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public CartItem(Long id, Long userId, Long productId, int quantity) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.productId = productId;
-		this.quantity = quantity;
-	}
+    private Long userId;     // ID of the user who added the product
+    private Long productId;  // ID of the product
+    private int quantity;    // Number of units
 
-	public Long getId() {
-		return id;
-	}
+    // ----------------------------
+    // Constructors
+    // ----------------------------
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public CartItem() {
+        // Default constructor required by JPA
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public CartItem(Long id, Long userId, Long productId, int quantity) {
+        this.id = id;
+        this.userId = userId;
+        this.productId = productId;
+        this.quantity = quantity;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    // ----------------------------
+    // Getters and Setters
+    // ----------------------------
 
-	public Long getProductId() {
-		return productId;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	
-	
-	
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
+
+
+
+
+
+

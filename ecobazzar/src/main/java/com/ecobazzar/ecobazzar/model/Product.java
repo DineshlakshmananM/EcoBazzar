@@ -1,75 +1,94 @@
 package com.ecobazzar.ecobazzar.model;
+
 import jakarta.persistence.*;
 
-
-@Entity 
-@Table(name = "products") 
+@Entity
+@Table(name = "products")
 public class Product {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    private String details;
+    
+    private Double price;
+    
+    private Double carbonImpact;
+    
+   
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private Boolean ecoCertified = false;
+    
+    private Long sellerId;
+    
+    private String imageUrl;
 
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment
+    
+    public String getImageUrl() {
+		return imageUrl;
+	}
 
-private Long id;
-private String name;
-private String details;
-private Double price;
-private Double carbonImpact;
-private Boolean ecoCertified;
-private Long sellerId;
-// Default constructor (required by JPA)
-public Product() {}
-// Constructor with all fields
-public Product(Long id, String name, String details, Double price,
-Double carbonImpact, Boolean ecoCertified, Long sellerId) {
-			
-			this.id = id;
-			
-			this.name = name;
-			
-			this.details = details;
-			
-			this.price = price;
-			
-			this.carbonImpact = carbonImpact;
-			
-			this.ecoCertified = ecoCertified;
-			
-			this.sellerId = sellerId;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
-}
-public Long getId() { return id; }
+	public Long getId() {
+        return id;
+    }
 
-public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
 
-public String getName() { return name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-public void setName(String name) { this.name = name; }
+    public String getDetails() {
+        return details;
+    }
 
+    public void setDetails(String details) {
+        this.details = details;
+    }
 
-public String getDetails() { return details; }
+    public Double getPrice() {
+        return price;
+    }
 
-public void setDetails(String details) { this.details = details; }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
+    public Double getCarbonImpact() {
+        return carbonImpact;
+    }
 
-public Double getPrice() { return price; }
+    public void setCarbonImpact(Double carbonImpact) {
+        this.carbonImpact = carbonImpact;
+    }
 
-public void setPrice(Double price) { this.price = price; }
+    public Boolean getEcoCertified() {
+        return ecoCertified;
+    }
 
+    public void setEcoCertified(Boolean ecoCertified) {
+        this.ecoCertified = ecoCertified;
+    }
 
-public Double getCarbonImpact() { return carbonImpact; }
+    public Long getSellerId() {
+        return sellerId;
+    }
 
-public void setCarbonImpact(Double carbonImpact) { this.carbonImpact = carbonImpact; }
-
-
-public Boolean getEcoCertified() { return ecoCertified; }
-
-public void setEcoCertified(Boolean ecoCertified) { this.ecoCertified = ecoCertified; }
-
-
-public Long getSellerId() { return sellerId; }
-
-public void setSellerId(Long sellerId) { this.sellerId = sellerId; }
-
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
+    }
 }

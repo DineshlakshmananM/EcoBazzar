@@ -7,65 +7,44 @@ import com.ecobazzar.ecobazzar.repository.ProductRepository;
 
 @Service
 public class ProductService {
-private final ProductRepository productRepository;
 
-// Constructor injection
-public ProductService(ProductRepository productRepository) {
-	this.productRepository = productRepository;
-}
+    private final ProductRepository productRepository;
 
-// CREATE
-public Product addProduct(Product product) {
-	return productRepository.save(product);
-}
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
-// READ
-public List<Product> getAllProducts() {
-	return productRepository.findAll();
-}
+    public Product createProduct(Product product) {
+        product.setEcoCertified(false);
+        return productRepository.save(product);
+    }
 
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
 
-// UPDATE
-public Product updateProduct(Long id, Product updatedProduct) {
+    public Product updateProductDetails(Long id, Product updateProduct) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    product.setName(updateProduct.getName());
+                    product.setDetails(updateProduct.getDetails());
+                    product.setPrice(updateProduct.getPrice());
+                    product.setCarbonImpact(updateProduct.getCarbonImpact());
+                    product.setSellerId(updateProduct.getSellerId());
+                    return productRepository.save(product);
+                })
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+    }
 
-	return productRepository.findById(id)
-	
-	.map(product -> {
-	
-	product.setName(updatedProduct.getName());
-	
-	product.setDetails(updatedProduct.getDetails());
-	
-	product.setPrice(updatedProduct.getPrice());
-	
-	product.setCarbonImpact(updatedProduct.getCarbonImpact());
-	
-	product.setEcoCertified(updatedProduct.getEcoCertified());
-	
-	product.setSellerId(updatedProduct.getSellerId());
-	
-	return productRepository.save(product);
+    public void deleteProductDetails(Long id) {
+        productRepository.deleteById(id);
+    }
 
-})
+    public List<Product> getEcoCertifiedProducts() {
+        return productRepository.findByEcoCertifiedTrue();
+    }
 
-.orElseThrow(() -> new RuntimeException("Product not found"));
-
-}
-
-
-// DELETE
-public void deleteProduct(Long id) {
-	productRepository.deleteById(id);
-}
-
-// Get only eco-certified products
-public List<Product> getEcoCertifiedProducts() {
-	return productRepository.findByEcoCertifiedTrue();
-}
-
-//Get eco-certified products sorted by carbon impact
-public List<Product> getEcoCertifiedSortedByCarbonImpact() {
-	return productRepository.findByEcoCertifiedTrueOrderByCarbonImpactAsc();
-}
-
+    public List<Product> getEcoCertifiedSortedByCarbonImpact() {
+        return productRepository.findByEcoCertifiedTrueOrderByCarbonImpactAsc();
+    }
 }
