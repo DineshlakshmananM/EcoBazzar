@@ -44,7 +44,12 @@ public class ProductController {
     public Product updateProductDetails(@PathVariable Long id, @RequestBody Product product) {
         return productService.updateProductDetails(id, product);
     }
+    @GetMapping("/{id}")
 
+    public Product getProductById(@PathVariable Long id) {
+    return productService.getProductById(id);
+    }
+    
     @PreAuthorize("hasAnyRole('SELLER','ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteProductDetails(@PathVariable Long id) {

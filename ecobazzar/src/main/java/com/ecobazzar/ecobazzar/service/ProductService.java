@@ -18,6 +18,13 @@ public class ProductService {
         product.setEcoCertified(false);
         return productRepository.save(product);
     }
+    public Product getProductById(Long id) {
+
+    	return productRepository.findById(id)
+
+    	.orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+
+    }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
