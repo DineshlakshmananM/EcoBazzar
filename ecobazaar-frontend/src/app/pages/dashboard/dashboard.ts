@@ -1,30 +1,17 @@
 import { CommonModule } from '@angular/common';
-
 import { Component } from '@angular/core';
-
 import { RouterLink } from '@angular/router';
 
-
 @Component({
-
-selector: 'app-dashboard',
-
-standalone: true,
-
-imports: [CommonModule, RouterLink],
-
-templateUrl: './dashboard.html',
-
-styleUrl: './dashboard.scss',
-
+  selector: 'app-dashboard',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.scss',
 })
-
 export class Dashboard {
 
-
-name= localStorage.getItem('name')
-
-role = localStorage.getItem('role')
-
+  name= localStorage.getItem('name')
+  role = localStorage.getItem('role')
 
 }

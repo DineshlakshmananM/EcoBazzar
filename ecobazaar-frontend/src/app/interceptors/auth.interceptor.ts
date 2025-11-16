@@ -1,54 +1,26 @@
-import { HttpInterceptorFn, HttpErrorResponse } from "@angular/common/http";
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 
-import { inject, Inject } from "@angular/core";
+export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
+  const router = inject(Router);
+  const token = localStorage.getItem('token') || '';
 
-import { Router } from "@angular/router";
+  const skipAuthFor = ['api.cloudinary.com'];
+  const shouldSkip = skipAuthFor.some(d => req.url.includes(d));
 
-import { catchError } from "rxjs";
+  if (token && !shouldSkip) {
+    req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` }});
+  }
 
-import { throwError } from "rxjs";
-
-
-export const AuthInterceptor:HttpInterceptorFn = (req, next)=>{
-
-const router = inject(Router);
-
-const token = localStorage.getItem('token');
-
-
-if(token){
-
-req = req.clone({
-
-setHeaders:{
-
-Authorization: `Bearer ${token}`
-
-
-}
-
-});
-
-}
-
-
-return next(req).pipe(
-
-catchError((err:HttpErrorResponse)=>{
-
-if(err.status===401||err.status===403){
-
-localStorage.clear();
-
-router.navigate(['/login']);
-
-}
-
-
-return throwError(()=>err);
-
-})
-
-);
-
+  return next(req).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 401 || err.status === 403) {
+        localStorage.clear();
+        router.navigate(['/login']);
+      }
+      return throwError(() => err);
+    })
+  );
 };
