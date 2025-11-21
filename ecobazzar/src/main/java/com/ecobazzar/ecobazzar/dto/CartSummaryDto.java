@@ -1,63 +1,41 @@
+// src/main/java/com/ecobazzar/ecobazzar/dto/CartSummaryDto.java
 package com.ecobazzar.ecobazzar.dto;
 
 import java.util.List;
-
 import com.ecobazzar.ecobazzar.model.CartItem;
 
 public class CartSummaryDto {
 
-	private List<CartItem> items;
-	
-	private double totalPrice;
-	
-	private double totalCarbon;
-	
-	private String ecoSuggestion;
-	
-	public CartSummaryDto() {}
-	
+    private List<CartItem> items;
+    private double totalPrice;
+    private double totalCarbonUsed;   // kg
+    private double totalCarbonSaved;  // kg
+    private String ecoSuggestion;
 
-	public CartSummaryDto(List<CartItem> items, double totalPrice, double totalCarbon, String ecoSuggestion) {
-		super();
-		this.items = items;
-		this.totalPrice = totalPrice;
-		this.totalCarbon = totalCarbon;
-		this.ecoSuggestion = ecoSuggestion;
-	}
+    public CartSummaryDto() {}
 
-	public List<CartItem> getItems() {
-		return items;
-	}
+    public CartSummaryDto(List<CartItem> items, double totalPrice,
+                          double totalCarbonUsed, double totalCarbonSaved,
+                          String ecoSuggestion) {
+        this.items = items;
+        this.totalPrice = totalPrice;
+        this.totalCarbonUsed = totalCarbonUsed;
+        this.totalCarbonSaved = totalCarbonSaved;
+        this.ecoSuggestion = ecoSuggestion;
+    }
 
-	public void setItems(List<CartItem> items) {
-		this.items = items;
-	}
+    public List<CartItem> getItems() { return items; }
+    public void setItems(List<CartItem> items) { this.items = items; }
 
-	public Double getTotalPrice() {
-		return totalPrice;
-	}
+    public double getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
 
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+    public double getTotalCarbonUsed() { return totalCarbonUsed; }
+    public void setTotalCarbonUsed(double totalCarbonUsed) { this.totalCarbonUsed = totalCarbonUsed; }
 
-	public Double getTotalCarbon() {
-		return totalCarbon;
-	}
+    public double getTotalCarbonSaved() { return totalCarbonSaved; }
+    public void setTotalCarbonSaved(double totalCarbonSaved) { this.totalCarbonSaved = totalCarbonSaved; }
 
-	public void setTotalCarbon(double totalCarbon) {
-		this.totalCarbon = totalCarbon;
-	}
-
-	public String getEcoSuggestion() {
-		return ecoSuggestion;
-	}
-
-	public void setEcoSuggestion(String ecoSuggestion) {
-		this.ecoSuggestion = ecoSuggestion;
-	}
-	
-	
-	
-	
+    public String getEcoSuggestion() { return ecoSuggestion; }
+    public void setEcoSuggestion(String ecoSuggestion) { this.ecoSuggestion = ecoSuggestion; }
 }
