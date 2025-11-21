@@ -1,46 +1,51 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrls: ['./login.scss']
 })
 export class Login {
-
-  loginForm: any;  // ✅ define property first
+  email = '';
+  password = '';
+  isLoggingIn = false;
 
   constructor(
-    private fb: FormBuilder,
     private auth: AuthService,
     private router: Router
-  ) {
-    // ✅ initialize inside constructor
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
-  }
+  ) {}
 
   submit() {
-    if (this.loginForm.invalid) return;
+    if (!this.email || !this.password) {
+      alert('Please enter email and password');
+      return;
+    }
 
-    this.auth.login(this.loginForm.value).subscribe({
-      next: (res) => {
-        alert('Login Successful ✅');
+    this.isLoggingIn = true;
 
-        if (res.role === 'ROLE_ADMIN') {
+    this.auth.login({ email: this.email, password: this.password }).subscribe({
+      next: () => {
+        this.isLoggingIn = false;
+        // make sure getRole() returns the role synchronously or from stored token
+        const role = this.auth.getRole();
+        if (role === 'ROLE_ADMIN') {
           this.router.navigate(['/admin']);
+        } else if (role === 'ROLE_SELLER') {
+          this.router.navigate(['/seller/dashboard']);
         } else {
           this.router.navigate(['/dashboard']);
         }
       },
-      error: () => alert('Invalid Email or Password ❌')
+      error: () => {
+        this.isLoggingIn = false;
+        alert('Wrong email or password');
+      }
     });
   }
 }
