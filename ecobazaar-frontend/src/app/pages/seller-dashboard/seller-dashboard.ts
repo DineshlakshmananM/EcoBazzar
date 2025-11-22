@@ -1,4 +1,3 @@
-
 import { Component, OnInit, AfterViewInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product';
